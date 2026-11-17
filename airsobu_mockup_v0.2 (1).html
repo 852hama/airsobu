@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>エアソブ | 画面モックアップ v0.2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Doto:ROND,wght@0..100,100..900&family=Inter+Tight:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0a0a;--p1:#111;--p2:#151515;--fg:#e8e8e8;--hd:#c8cdd2;--dim:#8b8e92;--line:rgba(232,232,232,.16);--line2:rgba(232,232,232,.3);--red:#ff2929;--org:#ff481b;--yel:#dffe38;--dot:"Doto","Inter Tight",ui-monospace,monospace;--sans:"Inter Tight","Noto Sans JP","Hiragino Sans",sans-serif}
+*{box-sizing:border-box}
+html{background:var(--bg);color-scheme:dark}
+body{margin:0;color:var(--fg);font-family:var(--sans);font-size:14.5px;line-height:1.8;letter-spacing:.04em;-webkit-font-smoothing:antialiased;background:var(--bg) radial-gradient(rgba(232,232,232,.075) 1px,transparent 1.6px) 0 0/22px 22px}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,p{margin:0}
+button{font:inherit;letter-spacing:inherit}
+:focus-visible{outline:2px solid var(--yel);outline-offset:2px}
+[hidden]{display:none!important}
+.en,.num{font-family:var(--dot);font-weight:900;letter-spacing:.01em}
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px}
+main{padding-top:54px}
+#main{outline:0}
+.view{display:none}.view.on{display:block}
+
+/* header */
+.hd{position:fixed;inset:0 0 auto 0;height:54px;display:flex;align-items:center;z-index:50;border-bottom:1px dashed var(--line2);background:rgba(10,10,10,.86);backdrop-filter:blur(10px)}
+.logo{display:flex;align-items:center;gap:10px;height:100%;padding:0 22px;white-space:nowrap}
+.logo .en{font-size:25px;line-height:1;color:var(--fg)}
+.logo i,.word i,.l3 i{font-style:normal;color:var(--yel)}
+.logo small{font-size:10.5px;color:var(--dim);letter-spacing:.14em}
+.nav{display:flex;gap:26px;margin:0 auto;height:100%}
+.nav a{display:flex;align-items:center;font-size:11.5px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);border-bottom:2px solid transparent;white-space:nowrap}
+.nav a:hover{color:var(--fg)}
+.nav a.on{color:var(--yel);border-color:var(--yel)}
+.acc{position:relative;height:100%;display:flex;align-items:center;gap:8px;padding:0 18px}
+.acc-btn{background:none;border:1px dashed var(--line2);border-radius:999px;color:var(--fg);padding:5px 14px;font-size:12.5px;cursor:pointer;max-width:210px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.acc-btn:hover{border-color:var(--yel)}
+.menu{position:absolute;right:18px;top:50px;min-width:190px;background:var(--p2);border:1px solid var(--line2);border-radius:12px;padding:6px;display:grid;box-shadow:0 14px 40px rgba(0,0,0,.6)}
+.menu a,.menu button{display:block;text-align:left;background:none;border:0;color:var(--fg);padding:9px 12px;border-radius:8px;font-size:13px;cursor:pointer}
+.menu a:hover,.menu button:hover{background:rgba(232,232,232,.08)}
+
+/* hero */
+.hero{position:relative;min-height:660px;overflow:hidden;display:flex;align-items:center;border-bottom:1px dashed var(--line);background:radial-gradient(62% 52% at 50% 0,rgba(255,255,255,.15),rgba(255,255,255,.03) 55%,transparent 74%)}
+.hero::after{content:"";position:absolute;left:-30%;right:-30%;bottom:-14%;height:58%;background:radial-gradient(rgba(232,232,232,.3) 1.8px,transparent 2.3px) 0 0/36px 36px;transform:perspective(520px) rotateX(64deg);-webkit-mask-image:linear-gradient(transparent,#000 45%,transparent);mask-image:linear-gradient(transparent,#000 45%,transparent);pointer-events:none}
+.hero-in{position:relative;z-index:2;width:100%;text-align:center;padding:56px 28px 150px}
+.hero h1{font-weight:900;line-height:.9;text-transform:uppercase;font-variation-settings:"ROND" 100}
+.hero h1 span{display:block}
+.l1,.l2{font-size:clamp(25px,8.8vw,76px)}
+.l1{color:var(--org)}.l2{color:var(--fg)}
+.l3{font-size:clamp(50px,20vw,172px);color:var(--hd);margin-top:.06em;letter-spacing:-.02em}
+.lead{margin-top:26px;font-weight:500;font-size:clamp(14px,1.6vw,17px);line-height:2}
+.lead em,.body em{font-style:normal;color:var(--org);font-weight:700}
+.origin{margin-top:14px;display:flex;justify-content:center;flex-wrap:wrap;gap:8px;align-items:center;font-size:11.5px;color:var(--dim)}
+.origin span{border:1px dashed var(--line2);border-radius:999px;padding:1px 12px;color:var(--fg);background:rgba(10,10,10,.6)}
+.hero-cta{margin-top:26px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.px{position:absolute;z-index:1;height:auto;pointer-events:none;filter:drop-shadow(1.5px 0 0 rgba(255,255,255,.8)) drop-shadow(-1.5px 0 0 rgba(120,225,255,.65)) drop-shadow(0 2px 0 rgba(255,150,225,.55)) drop-shadow(0 10px 22px rgba(0,0,0,.6));animation:bob 5.2s ease-in-out infinite alternate}
+#px-a{left:calc(50% - 520px);top:14%;--r:-12deg}
+#px-b{right:calc(50% - 450px);top:24%;--r:10deg}
+#px-c{left:max(12px,calc(50% - 470px));bottom:21%;--r:8deg}
+#px-d{right:calc(50% - 470px);bottom:36%;--r:-6deg}
+@keyframes bob{from{transform:translateY(-7px) rotate(var(--r,0deg))}to{transform:translateY(7px) rotate(calc(var(--r,0deg) + 5deg))}}
+.hero-card{position:absolute;right:28px;bottom:26px;width:204px;z-index:3;background:rgba(21,21,21,.94);border:1px solid var(--line2);border-radius:12px;padding:10px;font-size:11px;display:grid;gap:5px;line-height:1.5;text-align:left}
+.hero-card:hover{border-color:var(--yel)}
+
+/* section */
+.sec{padding:96px 0 30px}
+.view:not(#v-top) .sec{padding-top:60px}
+.sh{margin-bottom:28px}
+.sh.c{text-align:center}
+.sh .no{display:block;font-size:14px;color:var(--org);letter-spacing:.08em;margin-bottom:8px}
+.sh h2{font-weight:900;font-size:clamp(36px,6.6vw,78px);line-height:.92;color:var(--hd);text-transform:uppercase;letter-spacing:-.02em}
+.sh p{margin-top:12px;color:var(--fg);font-weight:700;font-size:15px}
+.body{font-size:13.5px;max-width:560px;margin-bottom:26px;color:var(--hd)}
+.sh.c+.body{margin-left:auto;margin-right:auto;text-align:center}
+.more{display:inline-flex;align-items:center;gap:10px;font-family:var(--dot);font-weight:900;font-size:19px;text-transform:uppercase;color:var(--yel)}
+.more::after{content:"\2197\FE0E";font-family:var(--sans);font-weight:400}
+.more:hover{color:#fff}
+.two{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:54px;align-items:center}
+.two.top{align-items:start}
+.glass{border:1px solid var(--line2);border-radius:40px;padding:44px;background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.015) 38%),rgba(17,17,17,.88)}
+.ghost{overflow:hidden;white-space:nowrap;padding:74px 0 18px;font-family:var(--dot);font-weight:900;font-size:clamp(34px,7vw,96px);line-height:1;color:#2b2b2b;text-transform:uppercase}
+.ghost div{display:inline-block;animation:mq 40s linear infinite}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* cards */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(244px,1fr));gap:18px;margin-bottom:32px}
+.card{background:var(--p2);border:1px solid var(--line);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:8px;transition:border-color .2s,transform .2s}
+a.card:hover{border-color:var(--yel);transform:translateY(-3px)}
+.th{aspect-ratio:3/2;border-radius:8px;position:relative;overflow:hidden;display:grid;place-items:center;border:1px dashed var(--line);background:#0c0c0c radial-gradient(rgba(232,232,232,.1) 1px,transparent 1.5px) 0 0/11px 11px}
+.th svg{width:72%}
+.th::after{content:"SAMPLE";position:absolute;right:8px;bottom:4px;font:900 10px var(--dot);color:var(--dim);letter-spacing:.08em}
+.row .th::after,.thumbs .th::after{display:none}
+.meta{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:11px;color:var(--dim)}
+.tag{display:inline-block;border:1px dashed var(--line2);border-radius:999px;padding:0 9px;font-size:10.5px;line-height:1.75;color:var(--hd);white-space:nowrap}
+.tag.hot{border:0;color:#0a0a0a;font-weight:700;letter-spacing:.1em;background:linear-gradient(110deg,#dffe38,#9ff,#f9f,#dffe38)}
+.card h3,.row h3{font-size:15px;font-weight:500;color:#fff;line-height:1.5}
+.spec{font-size:12px}
+.st .num{font-size:15px}
+.st.ok{color:var(--yel)}.st.warn{color:#ff8a66}.st.ng{color:var(--red)}.st.dead{color:var(--dim)}
+.st small{color:var(--dim)}
+
+/* ui */
+label{display:block;font-size:12px;color:var(--dim);margin-bottom:6px}
+input,select{width:100%;background:var(--p1);border:1px solid var(--line2);border-radius:8px;color:#fff;padding:10px 12px;font:inherit;letter-spacing:.02em}
+input:focus,select:focus{outline:0;border-color:var(--yel);box-shadow:0 0 0 3px rgba(223,254,56,.16)}
+input:disabled,select:disabled{opacity:.35}
+input[type=checkbox]{width:16px;height:16px;accent-color:var(--yel);flex:none;padding:0}
+input::placeholder{color:#5d6064}
+select option{background:#111;color:#fff}
+.panel{background:var(--p2);border:1px solid var(--line);border-radius:16px;padding:20px;display:grid;gap:14px;margin-bottom:18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px dashed var(--line2);border-radius:999px;padding:4px 14px;font-size:12px;background:none;color:var(--fg);cursor:pointer}
+.chip:hover{border-color:var(--fg)}
+.chip.on{background:var(--yel);color:#0a0a0a;border:1px solid var(--yel);font-weight:700}
+.f2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.f3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.f4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:1px dashed rgba(232,232,232,.55);color:#fff;background:rgba(10,10,10,.6);border-radius:999px;padding:10px 24px;font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap;transition:.15s}
+.btn:hover{border-color:#fff;background:rgba(232,232,232,.08)}
+.btn.pri{background:var(--yel);color:#0a0a0a;border:1px solid var(--yel);font-weight:700}
+.btn.pri:hover{background:#efff7a}
+.btn.sm{padding:5px 14px;font-size:12px}
+.btn.wide{width:100%;padding:13px}
+.btn.ng{border-color:var(--red);color:#ff8080}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.lnk{background:none;border:0;color:var(--hd);text-decoration:underline;cursor:pointer;font-size:inherit;padding:0}
+.note a,.ck .lnk{color:var(--yel);text-decoration:underline}
+.count{margin-bottom:16px;font-size:13px}.count .num{font-size:26px;color:#fff}.count .lnk{margin-left:12px;font-size:12px}
+.note{font-size:12px;color:var(--dim)}
+.sw{position:relative;width:44px;height:24px;border-radius:12px;background:rgba(232,232,232,.2);border:0;cursor:pointer;flex:none;padding:0}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:.2s}
+.sw.on{background:var(--yel)}.sw.on::after{left:23px;background:#0a0a0a}
+.tg{display:flex;align-items:center;gap:12px;font-size:13px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:28px}
+.stat{background:var(--p2);border:1px solid var(--line);border-radius:16px;padding:16px 18px}
+.stat b{display:block;font-family:var(--dot);font-weight:900;font-size:38px;color:#fff;line-height:1.15}
+.stat>span{font-size:12px;color:var(--hd)}
+.bar-row{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.row{display:flex;align-items:center;gap:14px;background:var(--p2);border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:10px}
+.row .th{width:96px;flex:none}
+.row .gr{flex:1;min-width:0}
+.offers{font-size:12px;margin-top:6px;color:#fff}.offers small{color:var(--dim)}.offers .num{font-size:15px;color:var(--yel)}
+.pubsw{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11px;min-width:52px}
+.form{display:grid;gap:18px;max-width:760px}
+.vbox{border:1px dashed var(--line2);border-radius:12px;padding:16px;display:grid;gap:12px}
+.vhead{display:flex;justify-content:space-between;align-items:center;color:#fff;gap:10px;flex-wrap:wrap}
+.vhead label,.ck{margin:0;color:var(--fg);font-size:13px;display:flex;align-items:center;gap:8px;cursor:pointer}
+.jr{font-size:12.5px;padding:9px 12px;border-radius:8px;background:rgba(232,232,232,.06);border-left:3px solid var(--dim)}
+.jr.ok{color:var(--yel);border-color:var(--yel)}.jr.warn{color:#ff9a7d;border-color:var(--org)}.jr.ng{color:#ff8080;border-color:var(--red);background:rgba(255,41,41,.12)}.jr.dead{color:var(--dim)}
+.drop{border:1px dashed var(--line2);border-radius:12px;padding:26px;text-align:center;font-size:12.5px;color:var(--dim)}
+.err{color:#ff8080;font-size:13px;min-height:1em}
+.acts{display:flex;gap:12px;justify-content:flex-end;flex-wrap:wrap}
+.back{font-size:12px;color:var(--dim);display:inline-block;margin-bottom:18px}
+.ttl{font-size:26px;font-weight:500;color:#fff;line-height:1.4;margin:10px 0 4px}
+.thumbs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}
+.dl{display:grid;grid-template-columns:132px 1fr;margin:18px 0;border-top:1px dashed var(--line2)}
+.dl dt,.dl dd,.kv dt,.kv dd{margin:0;padding:9px 0;border-bottom:1px dashed var(--line2);font-size:13px}
+.dl dt,.kv dt{color:var(--dim)}.dl dd,.kv dd{color:#fff;word-break:break-all}
+.kv{display:grid;grid-template-columns:140px 1fr;border-top:1px dashed var(--line2);margin:0}
+.ask{display:grid;gap:10px;justify-items:start}
+.prefs{display:grid;grid-template-columns:repeat(auto-fill,minmax(72px,1fr));gap:6px;margin-bottom:8px}
+.pf{border:1px dashed var(--line2);border-radius:8px;padding:6px 2px;text-align:center;font-size:11px;cursor:pointer;background:none;color:var(--fg)}
+.pf b{display:block;font-family:var(--dot);font-weight:900;font-size:12px;color:var(--dim)}
+.pf.v{background:var(--org);border:1px solid var(--org);color:#0a0a0a;font-weight:700}
+.pf.v b{color:#0a0a0a}.pf.sel{outline:2px solid var(--yel);outline-offset:1px}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;counter-reset:s;margin-bottom:40px}
+.step{border:1px dashed var(--line2);border-radius:12px;padding:14px;font-size:12.5px;color:var(--hd)}
+.step::before{counter-increment:s;content:"0" counter(s);font-family:var(--dot);font-weight:900;color:var(--org);display:block;font-size:24px;line-height:1.2}
+.step b{color:#fff;display:block}
+.sub{color:#fff;font-weight:700;font-size:15px;margin:34px 0 14px}
+.sub::before{content:"\2733\FE0E  ";color:var(--org)}
+
+/* auth */
+.auth{max-width:520px}
+.auth-box{border:1px solid var(--line2);border-radius:32px;padding:32px 30px;background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.015) 30%),rgba(17,17,17,.92)}
+.tabs{display:grid;grid-template-columns:1fr 1fr;border:1px dashed var(--line2);border-radius:999px;padding:4px;margin-bottom:28px}
+.tabs a{text-align:center;padding:6px;border-radius:999px;font-family:var(--dot);font-weight:900;font-size:17px;color:var(--dim)}
+.tabs a.on{background:var(--yel);color:#0a0a0a}
+.auth .sh h2{font-size:clamp(40px,11vw,62px)}
+.auth .form{gap:16px}
+.pw{position:relative}.pw input{padding-right:64px}
+.eye{position:absolute;right:6px;top:50%;transform:translateY(-50%);background:none;border:0;color:var(--hd);font-size:12px;cursor:pointer;padding:6px 8px}
+.rules{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:2px 14px;font-size:11.5px;color:var(--dim)}
+.rules li::before{content:"○ "}
+.rules li.ok{color:var(--yel)}.rules li.ok::before{content:"● "}
+.hint{font-size:11.5px;color:var(--dim);margin-top:5px}
+.dob{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:8px}
+.or{display:flex;align-items:center;gap:12px;font-size:11px;color:var(--dim)}
+.or::before,.or::after{content:"";flex:1;border-top:1px dashed var(--line2)}
+
+/* overlay */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.78);display:none;place-items:center;z-index:80;padding:20px}
+.modal.on{display:grid}
+.box{background:var(--p2);border:1px solid var(--line2);border-radius:24px;padding:26px;max-width:460px;width:100%;display:grid;gap:14px}
+.box h3{color:#fff;font-size:18px;font-weight:700}
+.box p{font-size:13px;color:var(--hd)}
+.toast{position:fixed;left:50%;bottom:30px;transform:translateX(-50%);background:var(--yel);color:#0a0a0a;font-weight:700;padding:10px 22px;border-radius:999px;font-size:13px;opacity:0;pointer-events:none;transition:.3s;z-index:90;max-width:92vw;text-align:center}
+.toast.on{opacity:1}
+.badge{pointer-events:none;position:absolute;right:22px;top:20px;width:96px;height:96px;z-index:2}
+.mk{font-size:9.5px;letter-spacing:.12em;color:var(--dim);border:1px dashed var(--line2);border-radius:999px;padding:0 9px;line-height:1.8}
+.badge g{transform-origin:50px 50px;animation:spin 24s linear infinite}
+.badge text{font:700 8.4px var(--sans);fill:var(--hd)}
+@keyframes spin{to{transform:rotate(360deg)}}
+footer{border-top:1px dashed var(--line2);margin-top:96px;padding:38px 28px 28px;overflow:hidden}
+.fnav a,.fnav button{display:block;font-family:var(--dot);font-weight:900;font-size:21px;margin-bottom:8px;color:var(--yel);text-transform:uppercase;background:none;border:0;padding:0;cursor:pointer;text-align:left}
+.fnav a::after{content:" \2197\FE0E";font-family:var(--sans);font-weight:400}
+.fnav a:hover{color:#fff}
+.fnav button{font-family:var(--sans);font-weight:400;font-size:12px;color:var(--dim);margin-top:20px;text-decoration:underline;text-transform:none}
+.word{font-family:var(--dot);font-weight:900;font-size:clamp(58px,19vw,280px);line-height:.86;color:var(--hd);margin:70px 0 18px;white-space:nowrap;letter-spacing:-.03em;font-variation-settings:"ROND" 100}
+.copy{font-size:11px;color:var(--dim)}
+
+@media(prefers-reduced-motion:reduce){.px,.ghost div,.badge g{animation:none}}
+@media(max-width:1399px){#px-d{display:none}}
+@media(max-width:1099px){#px-a,#px-b{display:none}}
+@media(max-width:999px){.hero-card,.badge,.mk{display:none}}
+@media(max-width:820px){
+ .hd{height:auto;flex-wrap:wrap}
+ .logo{flex:1;height:48px;padding:0 16px}
+ .acc{height:48px;padding:0 14px}
+ .acc-btn{max-width:150px}
+ .menu{right:10px;top:46px}
+ .nav{order:3;width:100%;height:38px;margin:0;padding:0 14px;gap:10px;justify-content:space-between;border-top:1px dashed var(--line);overflow-x:auto}
+ .nav a{font-size:10.5px;letter-spacing:.08em}
+ main{padding-top:87px}
+ .wrap{padding:0 18px}
+ .hero{min-height:560px}#px-c,#px-d{display:none}
+ #px-a,#px-b{display:block;top:auto;bottom:24px;width:54px}#px-a{left:7%}#px-b{right:9%;width:40px}
+ .hero-in{padding:40px 18px 110px}
+ .two,.f2,.f3,.f4{grid-template-columns:1fr;gap:16px}
+ .two{gap:26px}
+ .sec{padding-top:64px}
+ .glass{padding:26px 20px;border-radius:28px}
+ .row{flex-wrap:wrap}.row .th{width:72px}
+ .dl{grid-template-columns:108px 1fr}.kv{grid-template-columns:112px 1fr}
+ .auth-box{padding:26px 18px;border-radius:24px}
+}
+@media(max-width:400px){.logo small{display:none}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<pattern id="d0" width="3" height="3" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1.08" fill="#ff481b"/></pattern>
+<pattern id="d1" width="3" height="3" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1.08" fill="#dffe38"/></pattern>
+<pattern id="d2" width="3" height="3" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1.08" fill="#e8e8e8"/></pattern>
+<symbol id="i-rifle" viewBox="0 0 120 60"><path d="M4 24h22l4-5h34v-4h8v4h22v3h22v4H96v3H74l-2 5H62l-4 16h-9l3-16h-9l-3 8h-8l2-8H22l-8 9H4z"/></symbol>
+<symbol id="i-pistol" viewBox="0 0 120 60"><path d="M22 12h74v4h4v10H70l-3 7H52l-7 22H26l7-24h-9l-2-6z"/></symbol>
+<symbol id="i-optic" viewBox="0 0 120 60"><path fill-rule="evenodd" d="M30 12h60v26H74v6h14v6H32v-6h14v-6H30zM38 19v12h44V19z"/></symbol>
+<symbol id="i-gear" viewBox="0 0 120 60"><path d="M42 4h9c2 6 16 6 18 0h9l9 12-8 6v34H41V22l-8-6z"/></symbol>
+</defs></svg>
+
+<header class="hd">
+ <a class="logo" href="#top" aria-label="エアソブ トップへ"><span class="en">A<i>IR</i>SOBU</span><small>エアソブ</small><span class="mk">MOCKUP v0.2</span></a>
+ <nav class="nav" aria-label="メインメニュー">
+  <a href="#top" data-v="top" title="トップ">Home</a><a href="#search" data-v="search" title="装備をさがす">Search</a><a href="#garage" data-v="garage" title="マイガレージ">My Garage</a><a href="#field" data-v="field" title="フィールド記録">Field Log</a><a href="#rental" data-v="rental" title="レンタル">Rental</a>
+ </nav>
+ <div class="acc" id="acc"></div>
+</header>
+
+<main id="main" tabindex="-1">
+<!-- TOP -->
+<section class="view" id="v-top">
+ <div class="hero">
+  <div id="stickers" aria-hidden="true"></div>
+  <div class="hero-in">
+   <h1 class="en" aria-label="Show your gear. Log every field. AIRSOBU"><span class="l1">Show your gear</span><span class="l2">Log every field</span><span class="l3">A<i>IR</i>SOBU</span></h1>
+   <p class="lead">装備を<em>記録</em>して、<em>見せ合う</em>。<br>エアソフトの「部室」で、<em>あそぶ</em>。</p>
+   <div class="origin" aria-label="名前の由来"><span>エアソフト部</span>×<span>ブック</span>×<span>あそぶ</span></div>
+   <div class="hero-cta" id="hero-cta"></div>
+  </div>
+  <a class="hero-card" id="hero-card" href="#search"></a>
+  <svg class="badge" viewBox="0 0 100 100" aria-hidden="true"><defs><path id="bp" d="M50 50m-38 0a38 38 0 1 1 76 0a38 38 0 1 1-76 0"/></defs><g><text><textPath href="#bp" textLength="232">AIRSOBU ✳︎ MOCKUP v0.2 ✳︎ SAMPLE DATA ✳︎</textPath></text></g><circle cx="50" cy="50" r="25" fill="#111" stroke="rgba(232,232,232,.3)"/><text x="50" y="57" text-anchor="middle" style="font:900 19px var(--dot);fill:#dffe38">v0.2</text></svg>
+ </div>
+ <div class="wrap">
+  <div class="sec" id="s1"><div class="glass two">
+   <div class="th"><svg viewBox="0 0 120 60"><use href="#i-rifle" fill="url(#d0)"/></svg></div>
+   <div>
+    <div class="sh"><span class="no en">✳︎ 01</span><h2 class="en">My Garage</h2><p>持っている装備も、手放した装備も。</p></div>
+    <p class="body">エアソフトガン、光学機器、装備品をマイアカウントに登録できます。<em>公開・非公開は1点ずつ</em>切り替え可能。エアソフトガンは弾速（動かない場合は「不動」）を必ず記録します。</p>
+    <a class="more" href="#garage">My Garage</a>
+   </div>
+  </div></div>
+  <div class="sec" id="s2">
+   <div class="sh c"><span class="no en">✳︎ 02</span><h2 class="en">Search</h2><p>みんなの公開装備をさがす</p></div>
+   <p class="body">公開されている装備は、誰でも写真とスペックを見られます。カテゴリ、タグ、メーカー、モデル元メーカーで絞り込めます。</p>
+   <div class="grid" id="top-new"></div>
+   <a class="more" href="#search">View All</a>
+  </div>
+ </div>
+ <div class="ghost" aria-hidden="true"><div>Record your gear ✳︎ Share your loadout ✳︎ Log every field ✳︎ Record your gear ✳︎ Share your loadout ✳︎ Log every field ✳︎ </div></div>
+ <div class="wrap">
+  <div class="sec" id="s3"><div class="glass two">
+   <div>
+    <div class="sh"><span class="no en">✳︎ 03</span><h2 class="en">Field Log</h2><p>行ったフィールドを、全部おぼえておく。</p></div>
+    <p class="body">行ったことのあるフィールドを都道府県ごとに記録。回数や最後に行った日も残せます。</p>
+    <a class="more" href="#field">Field Log</a>
+   </div>
+   <div class="stat"><b><span id="top-pref">—</span> / 47</b><span id="top-pref-l">あなたが遊んだ都道府県</span></div>
+  </div></div>
+  <div class="sec" id="s4">
+   <div class="sh c"><span class="no en">✳︎ 04</span><h2 class="en">Rental</h2><p>映像・舞台の制作会社の方へ</p></div>
+   <p class="body">レンタル相談可の装備を閲覧し、運営へお問い合わせいただけます。運営が所有者からお預かりし、検品のうえお渡しします。所有者と直接やり取りする必要はありません。</p>
+   <p style="text-align:center"><a class="more" href="#rental">Rental</a></p>
+  </div>
+ </div>
+</section>
+
+<!-- SEARCH -->
+<section class="view" id="v-search"><div class="wrap sec">
+ <div class="sh"><span class="no en">✳︎ 02</span><h2 class="en">Search</h2><p>公開されている装備をさがす</p></div>
+ <div class="panel">
+  <input id="q" type="search" placeholder="キーワード（例: HK416 / Colt / 次世代）" aria-label="キーワード">
+  <div><label>カテゴリ</label><div class="chips" id="f-cat"></div></div>
+  <div class="f4">
+   <div><label for="f-kind">種類</label><select id="f-kind"></select></div>
+   <div><label for="f-maker">メーカー</label><select id="f-maker"></select></div>
+   <div><label for="f-real">モデル元メーカー（実銃）</label><select id="f-real"></select></div>
+   <div><label for="f-drive">駆動方式</label><select id="f-drive"></select></div>
+  </div>
+  <div><label>タグ</label><div class="chips" id="f-tags"></div></div>
+ </div>
+ <p class="count"><span class="num" id="cnt">0</span> 件<button type="button" class="lnk" id="f-reset">条件をクリア</button></p>
+ <div class="grid" id="res"></div>
+</div></section>
+
+<!-- ITEM -->
+<section class="view" id="v-item"></section>
+
+<!-- GARAGE -->
+<section class="view" id="v-garage"><div class="wrap sec">
+ <div class="sh"><span class="no en">✳︎ 01</span><h2 class="en">My Garage</h2><p id="g-who"></p></div>
+ <div class="stats" id="g-stats"></div>
+ <div class="bar-row"><div class="chips" id="g-tabs"></div><a class="btn pri" href="#new">＋ 装備を登録</a></div>
+ <div id="g-list"></div>
+ <p class="note">公開にした装備は、ログインしていない人にも写真とスペックが表示されます。「もしも買うなら？」の金額は、あなたにだけ表示されます。</p>
+</div></section>
+
+<!-- NEW -->
+<section class="view" id="v-new"><div class="wrap sec">
+ <div class="sh"><span class="no en">✳︎ 01</span><h2 class="en">Register</h2><p>装備を登録する</p></div>
+ <form id="nf" class="form" novalidate>
+  <div class="f2">
+   <div><label for="n-cat">カテゴリ *</label><select id="n-cat"></select></div>
+   <div><label for="n-kind">種類 *</label><select id="n-kind"></select></div>
+  </div>
+  <div class="f2">
+   <div><label for="n-maker">メーカー *</label><input id="n-maker" list="dl-maker" placeholder="例: 東京マルイ"></div>
+   <div><label for="n-name">機種・製品名 *</label><input id="n-name" placeholder="例: 次世代電動ガン HK416D"></div>
+  </div>
+  <div id="gun-only" style="display:grid;gap:18px">
+   <div class="f2">
+    <div><label for="n-real">モデル元メーカー（実銃）</label><input id="n-real" list="dl-real" placeholder="例: Colt / オリジナル"></div>
+    <div><label for="n-drive">駆動方式 *</label><select id="n-drive"><option>電動</option><option>ガスブローバック</option><option>ガス</option><option>エアコッキング</option></select></div>
+   </div>
+   <div class="vbox">
+    <div class="vhead"><b>弾速 *</b><label><input type="checkbox" id="n-dead"> 不動（発射できない）</label></div>
+    <div class="f3">
+     <div><label for="n-v">弾速・最大値（m/s）</label><input id="n-v" type="number" step="0.1" min="0" inputmode="decimal" placeholder="例: 92.0"></div>
+     <div><label for="n-bb">BB弾の重さ（g）</label><select id="n-bb"><option>0.20</option><option>0.25</option><option>0.28</option></select></div>
+     <div><label for="n-md">測定日</label><input id="n-md" type="date"></div>
+    </div>
+    <div id="jr" class="jr"></div>
+   </div>
+  </div>
+  <div class="f2">
+   <div><label for="n-st">所有状況 *</label><select id="n-st"><option value="own">所有中</option><option value="past">過去所有</option></select></div>
+   <div><label for="n-tags">タグ（カンマ区切り）</label><input id="n-tags" placeholder="例: 次世代, カスタム"></div>
+  </div>
+  <div class="drop">写真を追加（このモックでは未対応）</div>
+  <div class="tg"><button type="button" class="sw on" id="n-pub" aria-label="公開する"></button><span>公開する（写真とスペックを誰でも見られます）</span></div>
+  <div class="tg"><button type="button" class="sw on" id="n-ask" aria-label="もしも買うならを受け付ける"></button><span>「もしも買うなら？」を受け付ける</span></div>
+  <div class="tg"><button type="button" class="sw" id="n-rent" aria-label="レンタル相談可"></button><span>レンタル相談可（制作会社向け。連絡は運営経由）</span></div>
+  <div id="n-err" class="err" role="alert"></div>
+  <div class="acts"><a class="btn" href="#garage">やめる</a><button class="btn pri" type="button" id="n-go">登録する</button></div>
+ </form>
+ <datalist id="dl-maker"></datalist><datalist id="dl-real"></datalist>
+</div></section>
+
+<!-- FIELD -->
+<section class="view" id="v-field"><div class="wrap sec">
+ <div class="sh"><span class="no en">✳︎ 03</span><h2 class="en">Field Log</h2><p>行ったフィールドの記録</p></div>
+ <div class="stats" id="fl-stats"></div>
+ <p class="sub">都道府県（行った数 / 営業中の数）</p>
+ <div class="prefs" id="fl-prefs"></div>
+ <p class="note">件数は参考サイト「ハイパー道楽 全国サバゲーフィールド一覧」の2026-11-17時点の掲載数（営業中285件）をサンプルとして表示しています。</p>
+ <p class="sub">フィールド一覧：<span id="fl-cur">全国</span></p>
+ <div class="bar-row">
+  <input id="fl-q" type="search" placeholder="フィールド名でさがす" aria-label="フィールド名" style="max-width:340px">
+  <div class="tg"><button type="button" class="sw" id="fl-only" aria-label="行った所だけ"></button><span>行った所だけ表示</span></div>
+ </div>
+ <div id="fl-list"></div>
+ <p class="note">このモックのフィールドは18件のサンプルのみです。</p>
+</div></section>
+
+<!-- RENTAL -->
+<section class="view" id="v-rental"><div class="wrap sec">
+ <div class="sh"><span class="no en">✳︎ 04</span><h2 class="en">Rental</h2><p>制作会社さま向け：撮影用レンタルのご相談</p></div>
+ <div class="steps">
+  <div class="step"><b>お問い合わせ</b>カタログから装備を選び、運営へ送信</div>
+  <div class="step"><b>運営が所有者へ打診</b>所有者の情報は開示されません</div>
+  <div class="step"><b>お見積り・ご契約</b>条件を運営からご提示</div>
+  <div class="step"><b>運営がお預かり・検品</b>外観と弾速を記録</div>
+  <div class="step"><b>お渡し・ご使用</b>運営からお渡しします</div>
+  <div class="step"><b>ご返却・検品</b>運営が確認し所有者へ返送</div>
+ </div>
+ <p class="sub">レンタル相談可の装備</p>
+ <div class="grid" id="r-cat"></div>
+ <p class="sub">運営へのお問い合わせ</p>
+ <form id="rf" class="form" novalidate>
+  <div><label>選択中の装備</label><div id="r-sel" class="chips"></div></div>
+  <div class="f2">
+   <div><label for="r-co">会社名 *</label><input id="r-co" autocomplete="organization"></div>
+   <div><label for="r-nm">ご担当者名 *</label><input id="r-nm" autocomplete="name"></div>
+  </div>
+  <div class="f2">
+   <div><label for="r-ml">メールアドレス *</label><input id="r-ml" type="email" autocomplete="email"></div>
+   <div><label for="r-use">作品・用途 *</label><input id="r-use" placeholder="例: 配信ドラマの小道具"></div>
+  </div>
+  <div class="f2">
+   <div><label for="r-from">使用開始日</label><input id="r-from" type="date"></div>
+   <div><label for="r-to">返却予定日</label><input id="r-to" type="date"></div>
+  </div>
+  <div id="r-err" class="err" role="alert"></div>
+  <div class="acts"><button class="btn pri" type="button" id="r-go">運営に問い合わせる</button></div>
+ </form>
+</div></section>
+
+<!-- LOGIN -->
+<section class="view" id="v-login"><div class="wrap sec auth"><div class="auth-box">
+ <div class="tabs"><a href="#login" class="on" aria-current="page">LOGIN</a><a href="#signup">SIGN UP</a></div>
+ <div class="sh"><span class="no en">✳︎ WELCOME BACK</span><h2 class="en">Login</h2><p>ログイン</p></div>
+ <p class="jr warn" id="l-need" style="margin-bottom:16px" hidden></p>
+ <form id="lf" class="form" novalidate>
+  <div><label for="l-id">メールアドレス または ユーザー名</label><input id="l-id" autocomplete="username" autocapitalize="none" spellcheck="false"></div>
+  <div><label for="l-pw">パスワード</label><div class="pw"><input id="l-pw" type="password" autocomplete="current-password"><button type="button" class="eye" data-eye="l-pw" aria-pressed="false">表示</button></div></div>
+  <label class="ck"><input type="checkbox" id="l-keep" checked>ログインしたままにする</label>
+  <div id="l-err" class="err" role="alert"></div>
+  <button type="button" class="btn pri wide" id="l-go">ログイン</button>
+  <div class="or">または</div>
+  <button type="button" class="btn wide" data-act="demo">デモアカウントで試す（登録不要）</button>
+ </form>
+ <p class="note" style="margin-top:18px"><button type="button" class="lnk" data-act="forgot">パスワードを忘れた方</button>　｜　はじめての方は <a href="#signup">新規登録（無料）</a></p>
+ <p class="note st-note" style="margin-top:10px"></p>
+</div></div></section>
+
+<!-- SIGNUP -->
+<section class="view" id="v-signup"><div class="wrap sec auth"><div class="auth-box">
+ <div class="tabs"><a href="#login">LOGIN</a><a href="#signup" class="on" aria-current="page">SIGN UP</a></div>
+ <div class="sh"><span class="no en">✳︎ STEP 1 / 2</span><h2 class="en">Sign up</h2><p>新規登録（無料・18歳以上）</p></div>
+ <p class="jr warn" id="s-need" style="margin-bottom:16px" hidden></p>
+ <form id="sf" class="form" novalidate>
+  <div><label for="s-h">ユーザー名 *</label><input id="s-h" autocomplete="username" autocapitalize="none" spellcheck="false" maxlength="20" placeholder="例: airsoft_taro"><p class="hint">半角の英数字と _ で3〜20文字。「@ユーザー名」として公開されます。</p></div>
+  <div><label for="s-mail">メールアドレス *</label><input id="s-mail" type="email" autocomplete="email" placeholder="例: taro@example.com"><p class="hint">公開されません。</p></div>
+  <div><label for="s-pw">パスワード *</label><div class="pw"><input id="s-pw" type="password" autocomplete="new-password" maxlength="72"><button type="button" class="eye" data-eye="s-pw" aria-pressed="false">表示</button></div><ul class="rules" id="s-rules"><li>8文字以上</li><li>英字を含む</li><li>数字を含む</li></ul></div>
+  <div><label id="s-dob-l">生年月日 *</label><div class="dob" role="group" aria-labelledby="s-dob-l"><select id="s-y" aria-label="年" autocomplete="bday-year"></select><select id="s-m" aria-label="月" autocomplete="bday-month"></select><select id="s-d" aria-label="日" autocomplete="bday-day"></select></div><p class="hint">18歳以上かどうかの確認にだけ使います。このモックでは保存しません。</p></div>
+  <label class="ck"><input type="checkbox" id="s-agree"><span><button type="button" class="lnk" data-doc="terms">利用規約</button> と <button type="button" class="lnk" data-doc="privacy">プライバシーポリシー</button> に同意します</span></label>
+  <div id="s-err" class="err" role="alert"></div>
+  <button type="button" class="btn pri wide" id="s-go">登録する</button>
+ </form>
+ <p class="note" style="margin-top:18px">すでに登録済みの方は <a href="#login">ログイン</a></p>
+ <p class="note st-note" style="margin-top:10px"></p>
+</div></div></section>
+
+<!-- VERIFY -->
+<section class="view" id="v-verify"><div class="wrap sec auth"><div class="auth-box">
+ <div class="sh"><span class="no en">✳︎ STEP 2 / 2</span><h2 class="en">Check mail</h2><p>確認メールを送りました（という想定です）</p></div>
+ <p class="body"><b id="vf-mail" style="color:#fff;word-break:break-all"></b> あてに確認メールを送った想定です。本番では、メールに書かれたリンクを開くと登録が完了します。</p>
+ <p class="jr">このモックは実際にはメールを送りません。下のボタンで「リンクを開いた」ことにできます。</p>
+ <div class="form" style="margin-top:18px">
+  <button type="button" class="btn pri wide" id="vf-ok">メールのリンクを開いた（ことにする）</button>
+  <a class="btn wide" href="#signup">登録をやり直す</a>
+ </div>
+</div></div></section>
+
+<!-- ACCOUNT -->
+<section class="view" id="v-account"><div class="wrap sec">
+ <div class="sh"><span class="no en">✳︎ ACCOUNT</span><h2 class="en">Account</h2><p>アカウント</p></div>
+ <div class="form">
+  <dl class="kv" id="a-info"></dl>
+  <div class="acts" style="justify-content:flex-start"><button type="button" class="btn" data-act="logout">ログアウト</button><button type="button" class="btn ng" id="a-del" data-act="del">退会する</button></div>
+  <p class="note" id="a-note"></p>
+  <p class="note st-note"></p>
+ </div>
+</div></section>
+</main>
+
+<footer>
+ <div class="fnav"><a href="#top">Home</a><a href="#search">Search</a><a href="#garage">My Garage</a><a href="#field">Field Log</a><a href="#rental">Rental</a><button type="button" data-act="reset">モックのデータを初期化する</button></div>
+ <div class="word" aria-hidden="true">A<i>IR</i>SOBU</div>
+ <div class="copy">© 2026 AIRSOBU（エアソブ）｜ MOCKUP v0.2 ｜ 表示データはサンプルです。入力内容はこのブラウザの中にだけ保存されます</div>
+</footer>
+
+<div class="modal" id="mo" role="dialog" aria-modal="true" aria-labelledby="mo-h"><div class="box">
+ <h3 id="mo-h">もしも買うなら？</h3>
+ <p class="note">「もし買うとしたらこの金額」を所有者に伝える機能です。売買の申込みではなく、このサイト上で売買は成立しません。金額は所有者にだけ表示されます。</p>
+ <div><label for="mo-yen">金額（円）</label><input id="mo-yen" type="number" min="0" step="1000" inputmode="numeric" placeholder="例: 35000"></div>
+ <div><label for="mo-msg">ひとこと（任意）</label><input id="mo-msg" maxlength="60"></div>
+ <div class="acts"><button type="button" class="btn" data-close>やめる</button><button type="button" class="btn pri" id="mo-ok">所有者に伝える</button></div>
+</div></div>
+<div class="modal" id="cf" role="dialog" aria-modal="true" aria-labelledby="cf-h"><div class="box">
+ <h3 id="cf-h"></h3>
+ <p id="cf-b"></p>
+ <div class="acts"><button type="button" class="btn" id="cf-no" data-close>やめる</button><button type="button" class="btn pri" id="cf-ok" hidden>OK</button></div>
+</div></div>
+<div class="toast" id="toast" role="status"></div>
+<script>
+const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const DEMO='demo_airsofter',LIM=0.989,GUN='エアソフトガン',KEY='airsobu.mock.v02';
+const RESV=['admin','airsobu','support','official','staff','unei','root','system','guest','null','undefined'];
+const CATS={[GUN]:['アサルトライフル','サブマシンガン','スナイパーライフル','ショットガン','ハンドガン','その他'],'光学機器':['ドットサイト・ホロサイト','スコープ','その他'],'ギア':['プレートキャリア・ベスト','ヘルメット','ウェア','その他']};
+const icon=it=>it.cat===GUN?(it.kind==='ハンドガン'?'pistol':'rifle'):it.cat==='光学機器'?'optic':'gear';
+const isGun=c=>c===GUN;
+const J=(v,bb)=>0.5*(bb/1000)*v*v;
+const iso=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+const today=()=>iso(new Date());
+const NEWD=(()=>{const d=new Date();d.setDate(d.getDate()-7);return iso(d)})();
+
+const SAMPLE=[
+ {id:1,cat:'エアソフトガン',kind:'アサルトライフル',maker:'東京マルイ',name:'M4A1 MWS',real:'Colt',drive:'ガスブローバック',v:78.5,bb:0.20,md:'2026-10-18',tags:['GBB','ノーマル'],owner:DEMO,pub:true,st:'own',rental:true,ask:true,h:235,reg:'2026-11-10',cond:'良好',offers:[{u:'tanuki_cqb',yen:42000},{u:'pmc_kit',yen:38000}]},
+ {id:2,cat:'エアソフトガン',kind:'アサルトライフル',maker:'東京マルイ',name:'次世代電動ガン HK416D',real:'Heckler & Koch',drive:'電動',v:92.0,bb:0.20,md:'2026-11-02',tags:['次世代','カスタム'],owner:DEMO,pub:true,st:'own',rental:false,ask:true,h:265,reg:'2026-11-12',cond:'良好',offers:[{u:'nagamono_love',yen:30000}]},
+ {id:3,cat:'エアソフトガン',kind:'サブマシンガン',maker:'東京マルイ',name:'MP5A5',real:'Heckler & Koch',drive:'電動',v:null,bb:0.20,md:null,dead:true,tags:['ジャンク','修理待ち'],owner:DEMO,pub:false,st:'own',rental:false,ask:false,h:200,reg:'2026-09-01',cond:'不動',offers:[]},
+ {id:4,cat:'エアソフトガン',kind:'ハンドガン',maker:'東京マルイ',name:'グロック17 Gen.4',real:'Glock',drive:'ガスブローバック',v:71.2,bb:0.20,md:'2026-10-30',tags:['GBB','CQB向け'],owner:'tanuki_cqb',pub:true,st:'own',rental:false,ask:true,h:300,reg:'2026-11-15',cond:'良好',offers:[]},
+ {id:5,cat:'エアソフトガン',kind:'スナイパーライフル',maker:'東京マルイ',name:'VSR-10 プロスナイパーバージョン',real:'オリジナル',drive:'エアコッキング',v:89.4,bb:0.20,md:'2026-10-05',tags:['ボルトアクション','カスタム'],owner:'mori_no_sniper',pub:true,st:'own',rental:true,ask:true,h:160,reg:'2026-11-08',cond:'使用感あり',offers:[]},
+ {id:6,cat:'エアソフトガン',kind:'ハンドガン',maker:'東京マルイ',name:'M9A1',real:'Beretta',drive:'ガスブローバック',v:69.8,bb:0.20,md:'2026-09-21',tags:['GBB','ノーマル'],owner:'nagamono_love',pub:true,st:'own',rental:false,ask:false,h:20,reg:'2026-10-28',cond:'良好',offers:[]},
+ {id:7,cat:'エアソフトガン',kind:'アサルトライフル',maker:'KRYTAC',name:'TRIDENT MK2 CRB',real:'オリジナル',drive:'電動',v:90.3,bb:0.20,md:'2026-11-01',tags:['CQB向け','ノーマル'],owner:'pmc_kit',pub:true,st:'own',rental:false,ask:true,h:330,reg:'2026-11-14',cond:'良好',offers:[]},
+ {id:8,cat:'エアソフトガン',kind:'アサルトライフル',maker:'東京マルイ',name:'次世代電動ガン AK47',real:'Kalashnikov',drive:'電動',v:93.1,bb:0.20,md:'2026-10-11',tags:['次世代','ノーマル'],owner:'nagamono_love',pub:true,st:'own',rental:true,ask:true,h:40,reg:'2026-11-05',cond:'良好',offers:[]},
+ {id:9,cat:'エアソフトガン',kind:'ショットガン',maker:'東京マルイ',name:'M870 タクティカル',real:'Remington',drive:'ガス',v:null,bb:0.20,md:null,tags:['ノーマル'],owner:DEMO,pub:true,st:'past',rental:false,ask:false,h:120,reg:'2026-08-20',cond:'—',offers:[]},
+ {id:10,cat:'光学機器',kind:'ドットサイト・ホロサイト',maker:'EOTech',name:'EXPS3',real:null,drive:null,v:null,tags:['実物'],owner:'pmc_kit',pub:true,st:'own',rental:false,ask:true,h:285,reg:'2026-11-03',cond:'良好',offers:[]},
+ {id:11,cat:'ギア',kind:'プレートキャリア・ベスト',maker:'Crye Precision',name:'JPC 2.0',real:null,drive:null,v:null,tags:['実物','PMC装備'],owner:'pmc_kit',pub:true,st:'own',rental:true,ask:true,h:90,reg:'2026-10-22',cond:'使用感あり',offers:[]},
+ {id:12,cat:'ギア',kind:'ヘルメット',maker:'メーカー不明',name:'FASTタイプ ヘルメット（レプリカ）',real:null,drive:null,v:null,tags:['レプリカ','PMC装備'],owner:DEMO,pub:true,st:'own',rental:false,ask:false,h:215,reg:'2026-10-02',cond:'良好',offers:[]}
+];
+const PREF={北海道:12,青森:4,岩手:1,宮城:5,秋田:1,山形:3,福島:4,茨城:10,栃木:8,群馬:5,埼玉:17,千葉:41,東京:10,神奈川:7,新潟:3,富山:3,石川:2,福井:1,山梨:4,長野:6,岐阜:10,静岡:6,愛知:8,三重:7,滋賀:1,京都:10,大阪:13,兵庫:8,奈良:7,和歌山:3,鳥取:2,島根:4,岡山:2,広島:6,山口:2,徳島:1,香川:3,愛媛:2,高知:3,福岡:10,佐賀:3,長崎:4,熊本:6,大分:5,宮崎:5,鹿児島:4,沖縄:3};
+/* c,d はデモアカウントの訪問記録の初期値 */
+const fields=[
+ {n:'サバゲーパラダイス',p:'千葉',t:'アウトドア・市街地',c:3,d:'2026-10-25'},{n:'ヤネックス',p:'千葉',t:'アウトドア・森林',c:1,d:'2026-05-03'},
+ {n:'アリーナシャングリラ',p:'千葉',t:'インドア・ショップ併設',c:0,d:null},{n:'NEGOYA BASE',p:'千葉',t:'アウトドア・CQB',c:0,d:null},
+ {n:'Oasis',p:'埼玉',t:'アウトドア・市街地',c:2,d:'2026-09-14'},{n:'SISTER',p:'埼玉',t:'アウトドア・CQB',c:0,d:null},{n:'アサルト3',p:'埼玉',t:'アウトドア・森林',c:0,d:null},
+ {n:'ASOBIBA 新木場店',p:'東京',t:'CQB・インドア',c:5,d:'2026-11-08'},{n:'TENKOO',p:'東京',t:'アウトドア・市街地',c:1,d:'2026-03-21'},
+ {n:'みんなの森',p:'神奈川',t:'アウトドア・森林',c:1,d:'2025-11-23'},{n:'湘南トスカフィールド',p:'神奈川',t:'アウトドア・CQB',c:0,d:null},
+ {n:'ブレイブポイント江坂店',p:'大阪',t:'CQB・インドア',c:0,d:null},{n:'CQB FIELD BUDDY',p:'大阪',t:'アウトドア・CQB',c:0,d:null},
+ {n:'HEXERA',p:'愛知',t:'CQB・インドア',c:0,d:null},{n:'コンバットレディ愛知',p:'愛知',t:'アウトドア・森林',c:0,d:null},
+ {n:'ステージ・ワン',p:'福岡',t:'CQB・インドア',c:0,d:null},{n:'バギラン',p:'福岡',t:'アウトドア・森林',c:0,d:null},
+ {n:'トップガン札幌',p:'北海道',t:'アウトドア・CQB',c:0,d:null}
+];
+const DOCS={terms:['利用規約（準備中）','本文はまだ作成していません。入れる予定の主な項目：18歳以上限定／登録できない物（金属製モデルガン、基準値に達するエアソフトガンなど）／このサイトは売買の場ではないこと／禁止行為と通報／退会とデータの扱い。'],privacy:['プライバシーポリシー（準備中）','本文はまだ作成していません。入れる予定の主な項目：取得する情報（ユーザー名、メールアドレス、年齢確認の結果など）／利用目的／外部サービスへの送信／安全管理／開示・削除の請求窓口。']};
+const PX={ast:['....#....','.#..#..#.','..#.#.#..','...###...','#########','...###...','..#.#.#..','.#..#..#.','....#....'],bolt:['....##.','...##..','..##...','.##....','######.','...##..','..##...','.##....','##.....','#......'],arw:['..######','.....###','....####','...###.#','..###..#','.###...#','###.....','##......'],aim:['....#....','..#####..','.#..#..#.','.#.....#.','###.#.###','.#.....#.','.#..#..#.','..#####..','....#....']};
+
+/* ---- 保存（このブラウザの中だけ。使えない環境ではメモリのみ） ---- */
+function store(n){try{const s=window[n];s.setItem('__t','1');s.removeItem('__t');return s}catch(e){return null}}
+const LS=store('localStorage'),SS=store('sessionStorage');
+const F={q:'',cat:'',kind:'',maker:'',real:'',drive:'',tags:new Set()},G={tab:'own'},FS={pref:'',q:'',only:false},R={pick:new Set()};
+let DB,items,ME=null,NEXT='',NOTE='',PEND='',ROUTE='top',cur=null,tt,cfFn=null,busy=false;
+function seed(){return {v:2,seq:100,users:[{h:DEMO,mail:'demo@airsobu.example',demo:true,ok:true,at:'2026-11-01'}],items:JSON.parse(JSON.stringify(SAMPLE)),visits:{[DEMO]:Object.fromEntries(fields.map((f,i)=>[i,{c:f.c,d:f.d}]).filter(x=>x[1].c))}}}
+function load(){try{const d=JSON.parse(LS.getItem(KEY));if(d&&d.v===2&&Array.isArray(d.items)&&Array.isArray(d.users)&&d.visits)return d}catch(e){}return seed()}
+function save(){if(!LS)return;try{LS.setItem(KEY,JSON.stringify(DB))}catch(e){toast('このブラウザに保存できませんでした')}}
+const user=h=>DB.users.find(u=>u.h===h);
+function setSession(h,keep){ME=h;try{LS&&LS.removeItem(KEY+'.s');SS&&SS.removeItem(KEY+'.s');const s=keep?LS:SS;h&&s&&s.setItem(KEY+'.s',h)}catch(e){}}
+function getSession(){let h=null;try{h=(SS&&SS.getItem(KEY+'.s'))||(LS&&LS.getItem(KEY+'.s'))}catch(e){}const u=h&&user(h);return u&&u.ok?h:null}
+const fv=i=>(ME&&DB.visits[ME]&&DB.visits[ME][i])||{c:0,d:null};
+
+/* ---- 認証まわり（モック用の簡易処理。本番はサーバー側で行う） ---- */
+function rnd(){const a=new Uint8Array(12);try{crypto.getRandomValues(a)}catch(e){for(let i=0;i<12;i++)a[i]=Math.random()*256}return [...a].map(x=>x.toString(16).padStart(2,'0')).join('')}
+async function hashPw(pw,salt){
+ const s=salt+':'+pw;
+ try{const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return 's2:'+[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}catch(e){}
+ let h=2166136261;for(let r=0;r<300;r++)for(let i=0;i<s.length;i++){h^=s.charCodeAt(i)+r;h=Math.imul(h,16777619)}return 'f1:'+(h>>>0).toString(16);
+}
+const pwOk=p=>[p.length>=8,/[a-z]/i.test(p),/\d/.test(p)];
+function age(y,m,d){const n=new Date();let a=n.getFullYear()-y;if(n.getMonth()+1<m||(n.getMonth()+1===m&&n.getDate()<d))a--;return a}
+const taken=()=>new Set([...DB.users.map(u=>u.h),...items.map(i=>i.owner),...items.flatMap(i=>i.offers.map(o=>o.u))]);
+function hidePw(){$$('.pw input').forEach(i=>i.type='password');$$('.eye').forEach(b=>{b.textContent='表示';b.setAttribute('aria-pressed','false')})}
+function pwRules(){const r=pwOk($('#s-pw').value);$$('#s-rules li').forEach((li,i)=>li.classList.toggle('ok',r[i]))}
+function enter(h,keep,msg){setSession(h,keep);const n=NEXT;NEXT='';NOTE='';rAcc();go(n||'garage');toast(msg)}
+async function doLogin(){
+ if(busy)return;
+ const id=$('#l-id').value.trim().toLowerCase().replace(/^@/,''),pw=$('#l-pw').value,err=$('#l-err');
+ if(!id||!pw){err.textContent='メールアドレス（またはユーザー名）とパスワードを入力してください。';return}
+ busy=true;
+ try{
+  const u=DB.users.find(u=>!u.demo&&(u.h===id||u.mail===id));
+  if(!u||await hashPw(pw,u.salt)!==u.hash){err.textContent='メールアドレス（ユーザー名）かパスワードが違います。';$('#l-pw').value='';return}
+  if(!u.ok){PEND=u.h;go('verify');return}
+  $('#l-id').value='';enter(u.h,$('#l-keep').checked,'ログインしました');
+ }finally{busy=false}
+}
+async function doSignup(){
+ if(busy)return;
+ const h=$('#s-h').value.trim().toLowerCase().replace(/^@/,''),mail=$('#s-mail').value.trim().toLowerCase(),pw=$('#s-pw').value,y=+$('#s-y').value,m=+$('#s-m').value,d=+$('#s-d').value;
+ const fail=(msg,id)=>{$('#s-err').textContent=msg;id&&$('#'+id).focus()};
+ if(!/^[a-z0-9_]{3,20}$/.test(h))return fail('ユーザー名は、半角の英数字と _（アンダーバー）で3〜20文字にしてください。','s-h');
+ DB.users=DB.users.filter(u=>u.ok||(u.h!==h&&u.mail!==mail));
+ if(RESV.includes(h)||taken().has(h))return fail('このユーザー名は使えません。別の名前をお試しください。','s-h');
+ if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(mail))return fail('メールアドレスの形式を確認してください。','s-mail');
+ if(DB.users.some(u=>u.mail===mail))return fail('このメールアドレスは登録済みです。ログインしてください。','s-mail');
+ if(!pwOk(pw).every(Boolean))return fail('パスワードは8文字以上で、英字と数字を両方含めてください。','s-pw');
+ if(pw.toLowerCase()===h||pw.toLowerCase()===mail)return fail('ユーザー名やメールアドレスと同じパスワードは使えません。','s-pw');
+ if(!y||!m||!d)return fail('生年月日を選んでください。','s-y');
+ const dt=new Date(y,m-1,d);
+ if(dt.getMonth()!==m-1||dt>new Date())return fail('生年月日が正しくありません。','s-d');
+ if(age(y,m,d)<18)return fail('エアソブは18歳以上の方だけが登録できます。');
+ if(!$('#s-agree').checked)return fail('利用規約とプライバシーポリシーへの同意が必要です。','s-agree');
+ busy=true;
+ try{
+  const salt=rnd();
+  DB.users.push({h,mail,salt,hash:await hashPw(pw,salt),ok:false,adultAt:today(),agreeAt:today(),tv:'draft',at:today()});save();
+  $('#sf').reset();pwRules();hidePw();PEND=h;go('verify');
+ }finally{busy=false}
+}
+function ask(t,b,ok,fn){$('#cf-h').textContent=t;$('#cf-b').textContent=b;const o=$('#cf-ok');o.textContent=ok||'';o.hidden=!fn;$('#cf-no').textContent=fn?'やめる':'とじる';cfFn=fn||null;$('#cf').classList.add('on');$('#cf-no').focus()}
+const closeModals=()=>$$('.modal').forEach(m=>m.classList.remove('on'));
+function menu(on){const m=$('#acc-menu'),b=$('#acc-btn');if(!m)return;m.hidden=!on;b.setAttribute('aria-expanded',on)}
+const ACT={
+ logout(){setSession(null);rAcc();go('top');toast('ログアウトしました')},
+ demo(){enter(DEMO,false,'デモアカウントでログインしました')},
+ need(t){NEXT=t.dataset.next||'';NOTE='「もしも買うなら？」を使うには、ログインしてください。';go('login')},
+ forgot(){ask('パスワードの再設定','本番では、登録したメールアドレスに再設定用のリンクを送ります。このモックはメールを送れないため、再設定はできません。新しく登録し直すか、ページ下部の「モックのデータを初期化する」をお使いください。')},
+ reset(){ask('モックのデータを初期化しますか？','このブラウザに保存した内容（登録したアカウント、装備、フィールド記録）をすべて消して、最初のサンプルに戻します。','初期化する',()=>{DB=seed();items=DB.items;save();setSession(null);rAcc();go('top');toast('最初の状態に戻しました')})},
+ del(){ask('退会しますか？','アカウントと、登録した装備・フィールド記録・伝えた金額をすべて削除します。元に戻せません。','退会する',()=>{const h=ME;DB.users=DB.users.filter(u=>u.h!==h);DB.items=items=items.filter(i=>i.owner!==h);items.forEach(i=>i.offers=i.offers.filter(o=>o.u!==h));delete DB.visits[h];save();setSession(null);rAcc();go('top');toast('退会しました')})}
+};
+
+/* ---- 表示 ---- */
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('on'),2800)}
+function px(n,c,w,id){const b=PX[n];let o='';b.forEach((r,y)=>[...r].forEach((ch,x)=>{if(ch==='#')o+=`<circle cx="${x+.5}" cy="${y+.5}" r=".43"/>`}));return `<svg class="px" id="px-${id}" viewBox="0 0 ${b[0].length} ${b.length}" width="${w}" style="color:${c}" fill="currentColor">${o}</svg>`}
+function th(it){return `<div class="th"><svg viewBox="0 0 120 60"><use href="#i-${icon(it)}" fill="url(#d${it.h%3})"/></svg></div>`}
+function vel(it){
+ if(!isGun(it.cat))return '';
+ if(it.dead)return '<span class="st dead"><span class="tag">不動</span></span>';
+ if(it.v==null)return '<span class="st dead">弾速：未計測（過去所有）</span>';
+ const j=J(it.v,it.bb),k=j>=LIM?'ng':j>=0.9?'warn':'ok';
+ return `<span class="st ${k}">${k==='warn'?'▲ ':''}<span class="num">${it.v.toFixed(1)}</span> m/s <small>（${it.bb.toFixed(2)}g ／ ${j.toFixed(2)}J）</small></span>`;
+}
+const tagsOf=it=>it.tags.map(t=>`<span class="tag">#${esc(t)}</span>`).join(' ');
+function card(it){return `<a class="card" href="#item/${it.id}">${th(it)}<div class="meta"><span class="num">${it.reg}</span><span class="tag">${esc(it.kind)}</span>${it.reg>=NEWD?'<span class="tag hot">NEW</span>':''}</div><h3>${esc(it.maker)} ${esc(it.name)}</h3><div class="spec">${vel(it)}</div><div class="meta">@${esc(it.owner)}</div></a>`}
+const stat=a=>a.map(([b,s])=>`<div class="stat"><b>${b}</b><span>${s}</span></div>`).join('');
+function rAcc(){$('#acc').innerHTML=ME?`<button type="button" class="acc-btn" id="acc-btn" aria-haspopup="true" aria-expanded="false" aria-controls="acc-menu">@${esc(ME)} ▾</button><div class="menu" id="acc-menu" hidden><a href="#garage">マイガレージ</a><a href="#account">アカウント</a><button type="button" data-act="logout">ログアウト</button></div>`:'<a class="btn sm" href="#login">ログイン</a><a class="btn sm pri" href="#signup">新規登録</a>'}
+function rTop(){
+ const pubs=items.filter(i=>i.pub).sort((a,b)=>b.reg.localeCompare(a.reg)||b.id-a.id),it=pubs[0];
+ $('#top-new').innerHTML=pubs.slice(0,4).map(card).join('');
+ if(it){$('#hero-card').setAttribute('href','#item/'+it.id);$('#hero-card').innerHTML=th(it)+`<span class="num">${it.reg}</span><span>新着：${esc(it.maker)} ${esc(it.name)}</span>`}
+ $('#hero-cta').innerHTML=ME?'<a class="btn pri" href="#new">＋ 装備を登録</a><a class="btn" href="#garage">マイガレージ</a>':'<a class="btn pri" href="#signup">新規登録（無料）</a><a class="btn" href="#login">ログイン</a><button type="button" class="btn" data-act="demo">デモで試す</button>';
+ $('#top-pref').textContent=ME?new Set(fields.filter((f,i)=>fv(i).c>0).map(f=>f.p)).size:'—';
+ $('#top-pref-l').textContent=ME?'あなたが遊んだ都道府県':'ログインすると、遊んだ都道府県を記録できます';
+}
+function opts(sel,vals,curv){sel.innerHTML='<option value="">すべて</option>'+vals.map(v=>`<option${v===curv?' selected':''}>${esc(v)}</option>`).join('')}
+function rSearch(){
+ const pubs=items.filter(i=>i.pub),uniq=(k,a=pubs)=>[...new Set(a.map(i=>i[k]).filter(Boolean))].sort();
+ const kinds=uniq('kind',pubs.filter(i=>!F.cat||i.cat===F.cat));if(!kinds.includes(F.kind))F.kind='';
+ $('#f-cat').innerHTML=['',...Object.keys(CATS)].map(c=>`<button type="button" class="chip${F.cat===c?' on':''}" data-cat="${c}" aria-pressed="${F.cat===c}">${c||'すべて'}</button>`).join('');
+ opts($('#f-kind'),kinds,F.kind);opts($('#f-maker'),uniq('maker'),F.maker);opts($('#f-real'),uniq('real'),F.real);opts($('#f-drive'),uniq('drive'),F.drive);
+ $('#f-tags').innerHTML=[...new Set(pubs.flatMap(i=>i.tags))].sort().map(t=>`<button type="button" class="chip${F.tags.has(t)?' on':''}" data-tag="${esc(t)}" aria-pressed="${F.tags.has(t)}">#${esc(t)}</button>`).join('');
+ $('#q').value=F.q;applySearch();
+}
+function applySearch(){
+ const q=F.q.trim().toLowerCase().split(/\s+/).filter(Boolean);
+ const res=items.filter(it=>it.pub&&(!F.cat||it.cat===F.cat)&&(!F.kind||it.kind===F.kind)&&(!F.maker||it.maker===F.maker)&&(!F.real||it.real===F.real)&&(!F.drive||it.drive===F.drive)&&[...F.tags].every(t=>it.tags.includes(t))&&q.every(w=>[it.maker,it.name,it.real,it.cat,it.kind,it.drive,it.owner,...it.tags].join(' ').toLowerCase().includes(w)));
+ $('#res').innerHTML=res.map(card).join('')||'<p>条件に合う装備がありません。</p>';
+ $('#cnt').textContent=res.length;
+}
+function rItem(id){
+ cur=id;const it=items.find(x=>x.id===id),el=$('#v-item');
+ if(!it||(!it.pub&&it.owner!==ME)){el.innerHTML='<div class="wrap sec"><p class="body">この装備は非公開か、見つかりません。</p><a class="more" href="#search">Search</a></div>';return}
+ const mine=!!ME&&it.owner===ME,my=ME?it.offers.find(o=>o.u===ME):null,rows=[['カテゴリ',it.cat],['種類',it.kind],['メーカー',it.maker],['機種・製品名',it.name]];
+ if(isGun(it.cat))rows.push(['モデル元メーカー',it.real||'—'],['駆動方式',it.drive],['弾速',vel(it),1],['測定日',it.md||'—']);
+ rows.push(['所有状況',it.st==='own'?'所有中':'過去所有'],['状態',it.cond],['レンタル相談',it.rental?'可（運営経由）':'不可'],['登録日',it.reg]);
+ const no='<p class="note">売買の申込みではありません。このサイト上で売買は成立しません。</p>';
+ const ask=mine?`<p class="note">あなたの装備です。「もしも買うなら？」が ${it.offers.length} 件届いています。</p><a class="more" href="#garage">My Garage</a>`
+  :!it.ask?'<p class="note">この装備は「もしも買うなら？」を受け付けていません。</p>'
+  :!ME?`<button type="button" class="btn pri" data-act="need" data-next="item/${it.id}">ログインして金額を伝える</button><p class="note">「もしも買うなら？」は、会員登録（無料）をすると使えます。</p>${no}`
+  :`<button type="button" class="btn pri" id="mo-open">もしも買うなら？ 金額を${my?'変更する':'伝える'}</button>${my?`<p class="note">あなたが伝えた金額：<span class="num">¥${my.yen.toLocaleString()}</span>（所有者にだけ表示）</p>`:''}${no}`;
+ el.innerHTML=`<div class="wrap sec"><a class="back" href="#search">← 検索にもどる</a><div class="two top"><div>${th(it)}<div class="thumbs"><div class="th"></div><div class="th"></div><div class="th"></div></div></div><div><div class="meta"><span class="tag">${it.pub?'公開中':'非公開（あなたにだけ表示）'}</span>${tagsOf(it)}</div><h2 class="ttl">${esc(it.maker)} ${esc(it.name)}</h2><div class="meta">@${esc(it.owner)}</div><dl class="dl">${rows.map(([k,v,raw])=>`<dt>${k}</dt><dd>${raw?v:esc(v)}</dd>`).join('')}</dl><div class="ask">${ask}</div>${isGun(it.cat)?'<p class="note" style="margin-top:14px">弾速は所有者による申告値です。</p>':''}</div></div></div>`;
+}
+function rGarage(){
+ const mine=items.filter(i=>i.owner===ME);
+ $('#g-who').textContent='@'+ME+' の装備';
+ $('#g-stats').innerHTML=stat([[mine.length,'登録した装備'],[mine.filter(i=>i.pub).length,'公開中'],[fields.filter((f,i)=>fv(i).c>0).length,'行ったフィールド'],[mine.reduce((s,i)=>s+i.offers.length,0),'届いた「もしも買うなら？」']]);
+ $('#g-tabs').innerHTML=[['own','所有中'],['past','過去所有']].map(([k,l])=>`<button type="button" class="chip${G.tab===k?' on':''}" data-gtab="${k}" aria-pressed="${G.tab===k}">${l} <span class="num">${mine.filter(i=>i.st===k).length}</span></button>`).join('');
+ $('#g-list').innerHTML=mine.filter(i=>i.st===G.tab).map(it=>`<div class="row">${th(it)}<div class="gr"><a href="#item/${it.id}"><h3>${esc(it.maker)} ${esc(it.name)}</h3></a><div class="spec">${vel(it)} ${tagsOf(it)}</div>${it.offers.length?`<div class="offers">もしも買うなら？ <span class="num">${it.offers.length}</span>件：${it.offers.map(o=>`<span class="num">¥${o.yen.toLocaleString()}</span> <small>@${esc(o.u)}${o.msg?'「'+esc(o.msg)+'」':''}</small>`).join(' ／ ')}</div>`:''}</div><div class="pubsw"><button type="button" class="sw${it.pub?' on':''}" data-pub="${it.id}" aria-label="公開の切り替え" aria-pressed="${it.pub}"></button><span>${it.pub?'公開':'非公開'}</span></div></div>`).join('')||`<div class="drop">${G.tab==='own'?'所有中':'過去所有'}の装備は、まだ登録がありません。<br><br><a class="btn pri" href="#new">＋ 装備を登録する</a></div>`;
+}
+function calc(){
+ const gun=isGun($('#n-cat').value),dead=$('#n-dead').checked,past=$('#n-st').value==='past',r=$('#jr');
+ $('#gun-only').style.display=gun?'grid':'none';
+ ['n-v','n-bb','n-md'].forEach(i=>$('#'+i).disabled=dead);
+ if(!gun)return 'skip';
+ if(dead){r.className='jr dead';r.textContent='「不動」として登録します。弾速の入力は不要です。';return 'dead'}
+ const v=parseFloat($('#n-v').value),bb=parseFloat($('#n-bb').value);
+ if(!(v>0)){r.className='jr';r.textContent=past?'過去所有の装備は、弾速が分からなければ空欄のまま登録できます。':'所有中のエアソフトガンは、弾速の入力か「不動」のチェックが必要です。';return past?'skip':'need'}
+ const j=J(v,bb);
+ if(j>=LIM){r.className='jr ng';r.innerHTML=`<b>${j.toFixed(3)} J</b> ― 6mmBB弾の基準値（${LIM}J）に達する値のため、登録できません。お持ちの場合は最寄りの警察署へご相談ください。`;return 'ng'}
+ if(j>=0.9){r.className='jr warn';r.innerHTML=`<b>${j.toFixed(3)} J</b> ― 基準値（${LIM}J）に近い値です。気温や個体差で上振れしないかご確認ください。`;return 'warn'}
+ r.className='jr ok';r.innerHTML=`<b>${j.toFixed(3)} J</b> ― 基準値（${LIM}J）未満です。`;return 'ok';
+}
+const fillKind=()=>{$('#n-kind').innerHTML=CATS[$('#n-cat').value].map(k=>`<option>${k}</option>`).join('')};
+function rNew(){
+ $('#nf').reset();fillKind();$('#n-pub').classList.add('on');$('#n-ask').classList.add('on');$('#n-rent').classList.remove('on');
+ $('#dl-maker').innerHTML=[...new Set(items.map(i=>i.maker))].map(m=>`<option value="${esc(m)}">`).join('');
+ $('#dl-real').innerHTML=[...new Set(items.map(i=>i.real).filter(Boolean))].map(m=>`<option value="${esc(m)}">`).join('');
+ $('#n-md').value=today();$('#n-err').textContent='';calc();
+}
+function submitGear(){
+ const cat=$('#n-cat').value,gun=isGun(cat),maker=$('#n-maker').value.trim(),name=$('#n-name').value.trim(),err=$('#n-err'),s=calc();
+ if(!maker||!name){err.textContent='メーカーと機種・製品名を入力してください。';return}
+ if(s==='need'){err.textContent='弾速を入力するか、「不動」にチェックしてください。';return}
+ if(s==='ng'){err.textContent='基準値に達する弾速のため、登録できません。';return}
+ const dead=gun&&$('#n-dead').checked,v=parseFloat($('#n-v').value),on=i=>$('#'+i).classList.contains('on'),st=$('#n-st').value;
+ items.push({id:DB.seq++,cat,kind:$('#n-kind').value,maker,name,real:gun?($('#n-real').value.trim()||null):null,drive:gun?$('#n-drive').value:null,v:gun&&!dead&&v>0?v:null,bb:parseFloat($('#n-bb').value),md:gun&&!dead&&v>0?($('#n-md').value||null):null,dead,tags:[...new Set($('#n-tags').value.split(/[,、，]/).map(x=>x.trim().replace(/^[#＃]/,'')).filter(Boolean))].slice(0,10),owner:ME,pub:on('n-pub'),st,rental:on('n-rent'),ask:on('n-ask'),h:Math.floor(Math.random()*360),reg:today(),cond:dead?'不動':'—',offers:[]});
+ save();G.tab=st;go('garage');toast('装備を登録しました');
+}
+function rField(){
+ const idx=fields.map((f,i)=>i),vis=idx.filter(i=>fv(i).c>0),vp=new Set(vis.map(i=>fields[i].p));
+ $('#fl-stats').innerHTML=stat([[vis.length,'行ったフィールド'],[vp.size+' / 47','遊んだ都道府県'],[vis.reduce((s,i)=>s+fv(i).c,0),'通算の参加回数']]);
+ $('#fl-prefs').innerHTML=Object.entries(PREF).map(([p,n])=>{const k=vis.filter(i=>fields[i].p===p).length;return `<button type="button" class="pf${k?' v':''}${FS.pref===p?' sel':''}" data-pf="${p}" aria-pressed="${FS.pref===p}">${p}<b>${k}/${n}</b></button>`}).join('');
+ const q=FS.q.trim().toLowerCase(),list=idx.filter(i=>{const f=fields[i];return (!FS.pref||f.p===FS.pref)&&(!FS.only||fv(i).c>0)&&(!q||(f.n+f.p+f.t).toLowerCase().includes(q))});
+ $('#fl-list').innerHTML=list.map(i=>{const f=fields[i],x=fv(i);return `<div class="row"><div class="gr"><h3>${esc(f.n)}</h3><div class="spec"><span class="tag">${f.p}</span> <span class="tag">${f.t}</span> ${x.c?`<span class="num">${x.c}</span>回 ・ 最終 <span class="num">${x.d}</span>`:'未訪問'}</div></div>${x.c?`<button type="button" class="btn sm" data-minus="${i}" aria-label="1回減らす">−1</button>`:''}<button type="button" class="btn sm${x.c?'':' pri'}" data-plus="${i}">${x.c?'＋1回':'行った！'}</button></div>`}).join('')||'<p class="body">このモックのサンプルには、該当するフィールドがありません。</p>';
+ $('#fl-only').classList.toggle('on',FS.only);$('#fl-cur').textContent=FS.pref||'全国';
+}
+function rRental(){
+ const cat=items.filter(i=>i.rental&&i.pub);
+ [...R.pick].forEach(id=>cat.some(i=>i.id===id)||R.pick.delete(id));
+ $('#r-cat').innerHTML=cat.map(it=>`<div class="card">${th(it)}<div class="meta"><span class="tag">${esc(it.kind)}</span><span>所有者：非公開</span></div><h3>${esc(it.maker)} ${esc(it.name)}</h3><div class="spec">${vel(it)}</div><button type="button" class="btn sm${R.pick.has(it.id)?' pri':''}" data-pick="${it.id}">${R.pick.has(it.id)?'✓ 追加済み':'問い合わせに追加'}</button></div>`).join('');
+ $('#r-sel').innerHTML=R.pick.size?[...R.pick].map(id=>{const it=items.find(x=>x.id===id);return `<span class="tag">${esc(it.maker)} ${esc(it.name)}</span>`}).join(''):'<span class="note">上のカタログから装備を選んでください。</span>';
+}
+function submitRental(){
+ const err=$('#r-err');
+ if(!R.pick.size){err.textContent='カタログから装備を1点以上選んでください。';return}
+ if(['r-co','r-nm','r-ml','r-use'].some(i=>!$('#'+i).value.trim())){err.textContent='* の項目を入力してください。';return}
+ if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test($('#r-ml').value.trim())){err.textContent='メールアドレスの形式を確認してください。';return}
+ err.textContent='';R.pick.clear();$('#rf').reset();rRental();toast('運営に問い合わせを送信しました（モック）');
+}
+const showNote=id=>{const n=$('#'+id);n.hidden=!NOTE;n.textContent=NOTE};
+function rLogin(){$('#l-pw').value='';$('#l-err').textContent='';hidePw();showNote('l-need')}
+function rSignup(){$('#s-err').textContent='';showNote('s-need')}
+function rVerify(){$('#vf-mail').textContent=user(PEND).mail}
+function rAccount(){
+ const u=user(ME),n=items.filter(i=>i.owner===ME).length;
+ $('#a-info').innerHTML=`<dt>ユーザー名</dt><dd>@${esc(u.h)}</dd><dt>メールアドレス</dt><dd>${esc(u.mail)}（非公開）</dd><dt>年齢確認</dt><dd>${u.demo?'確認済み（デモ用）':'18歳以上を確認済み（'+esc(u.adultAt)+'）'}</dd><dt>規約への同意</dt><dd>${u.demo?'—':esc(u.agreeAt)+' に同意（規約は準備中）'}</dd><dt>登録日</dt><dd>${esc(u.at)}</dd><dt>登録した装備</dt><dd>${n} 点</dd>`;
+ $('#a-del').disabled=!!u.demo;
+ $('#a-note').textContent=u.demo?'デモアカウントは退会できません。変更した内容を戻すときは、ページ下部の「モックのデータを初期化する」をお使いください。':'退会すると、登録した装備・フィールド記録・伝えた金額も一緒に削除されます。';
+}
+
+/* ---- 画面の切り替え（URLの # が使えない表示環境でも動くよう、内部で管理） ---- */
+const VIEWS={top:rTop,search:rSearch,item:a=>rItem(+a),garage:rGarage,new:rNew,field:rField,rental:rRental,login:rLogin,signup:rSignup,verify:rVerify,account:rAccount};
+const NEED={garage:'マイガレージ',new:'装備の登録',field:'フィールド記録',account:'アカウント'};
+const hashNow=()=>{try{return decodeURIComponent(location.hash.slice(1))||'top'}catch(e){return 'top'}};
+function setUrl(p,rep){try{history[rep?'replaceState':'pushState'](null,'','#'+p)}catch(e){}}
+function go(p,rep){ROUTE=p;setUrl(p,rep);route()}
+function route(){
+ let [v,arg]=ROUTE.split('/');if(!VIEWS[v])v='top';
+ if(ME&&!user(ME)){ME=null;rAcc()}
+ if(NEED[v]&&!ME){NEXT=ROUTE;NOTE=NEED[v]+'を使うには、ログインしてください。';v='login'}
+ if((v==='login'||v==='signup')&&ME)v='garage';
+ if(v==='verify'){const u=user(PEND);if(!u||u.ok)v=ME?'garage':'login'}
+ const authv=v==='login'||v==='signup'||v==='verify';
+ if(!authv){NOTE='';NEXT=''}
+ const path=v==='item'?'item/'+arg:v;
+ if(path!==ROUTE){ROUTE=path;setUrl(path,1)}
+ $$('.view').forEach(e=>e.classList.toggle('on',e.id==='v-'+v));
+ const navOf={item:'search',new:'garage'}[v]||v;
+ $$('.nav a').forEach(a=>{const on=a.dataset.v===navOf;a.classList.toggle('on',on);on?a.setAttribute('aria-current','page'):a.removeAttribute('aria-current')});
+ menu(false);closeModals();
+ VIEWS[v](arg);window.scrollTo(0,0);
+ try{$('#main').focus({preventScroll:true})}catch(e){}
+ if(authv&&window.matchMedia&&matchMedia('(pointer:fine)').matches){const f=$('#v-'+v+' input');f&&f.focus()}
+}
+
+document.addEventListener('click',e=>{
+ const a=e.target.closest('a[href^="#"]');
+ if(a){e.preventDefault();go(a.getAttribute('href').slice(1)||'top');return}
+ const t=e.target.closest('button');
+ if(!t||t.id!=='acc-btn')menu(false);
+ if(!t)return;const d=t.dataset;
+ if(t.id==='acc-btn'){menu($('#acc-menu').hidden);return}
+ if(d.act){ACT[d.act]&&ACT[d.act](t);return}
+ if(d.doc){ask(DOCS[d.doc][0],DOCS[d.doc][1]);return}
+ if(d.eye){const i=$('#'+d.eye),on=i.type==='password';i.type=on?'text':'password';t.textContent=on?'隠す':'表示';t.setAttribute('aria-pressed',on);return}
+ if(t.id==='l-go'){doLogin();return}
+ if(t.id==='s-go'){doSignup();return}
+ if(t.id==='vf-ok'){const u=user(PEND);if(u){u.ok=true;save();PEND='';enter(u.h,true,'登録が完了しました。ようこそ、@'+u.h+' さん')}return}
+ if(t.id==='n-go'){submitGear();return}
+ if(t.id==='r-go'){submitRental();return}
+ if(t.id==='cf-ok'){const f=cfFn;cfFn=null;closeModals();f&&f();return}
+ if('close' in d){closeModals();return}
+ if('cat' in d){F.cat=d.cat;rSearch();return}
+ if(d.tag){F.tags.has(d.tag)?F.tags.delete(d.tag):F.tags.add(d.tag);rSearch();return}
+ if(t.id==='f-reset'){Object.assign(F,{q:'',cat:'',kind:'',maker:'',real:'',drive:''});F.tags.clear();rSearch();return}
+ if(d.pub){const it=items.find(i=>i.id===+d.pub);if(!it||it.owner!==ME)return;it.pub=!it.pub;save();rGarage();toast(it.pub?'公開にしました':'非公開にしました');return}
+ if(d.gtab){G.tab=d.gtab;rGarage();return}
+ if(d.pf){FS.pref=FS.pref===d.pf?'':d.pf;rField();return}
+ if(d.plus||d.minus){
+  if(!ME)return;const i=+(d.plus||d.minus),v=DB.visits[ME]||(DB.visits[ME]={}),x=v[i]||(v[i]={c:0,d:null});
+  if(d.plus){x.c++;x.d=today();toast(fields[i].n+' を記録しました')}else{x.c=Math.max(0,x.c-1);if(!x.c)delete v[i]}
+  save();rField();return}
+ if(t.id==='fl-only'){FS.only=!FS.only;rField();return}
+ if(d.pick){const id=+d.pick;R.pick.has(id)?R.pick.delete(id):R.pick.add(id);rRental();return}
+ if(t.id==='mo-open'){const it=items.find(i=>i.id===cur),my=it&&it.offers.find(o=>o.u===ME);$('#mo').classList.add('on');$('#mo-yen').value=my?my.yen:'';$('#mo-msg').value=my&&my.msg||'';$('#mo-yen').focus();return}
+ if(t.id==='mo-ok'){
+  const y=parseInt($('#mo-yen').value,10),msg=$('#mo-msg').value.trim().slice(0,60),it=items.find(i=>i.id===cur);
+  if(!ME||!it||!it.ask||it.owner===ME)return;
+  if(!(y>0)||y>99999999){toast('金額を入力してください');return}
+  const my=it.offers.find(o=>o.u===ME);my?Object.assign(my,{yen:y,msg}):it.offers.push({u:ME,yen:y,msg});
+  save();closeModals();rItem(cur);toast('金額を所有者に伝えました');return}
+ if(t.classList.contains('sw')){t.classList.toggle('on');return}
+});
+$$('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)closeModals()}));
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModals();menu(false)}});
+$('#q').addEventListener('input',e=>{F.q=e.target.value;applySearch()});
+[['f-kind','kind'],['f-maker','maker'],['f-real','real'],['f-drive','drive']].forEach(([i,k])=>$('#'+i).addEventListener('change',e=>{F[k]=e.target.value;applySearch()}));
+$('#fl-q').addEventListener('input',e=>{FS.q=e.target.value;rField()});
+$('#nf').addEventListener('input',e=>{if(e.target.id==='n-cat')fillKind();$('#n-err').textContent='';calc()});
+$('#s-pw').addEventListener('input',pwRules);
+$('#sf').addEventListener('input',()=>$('#s-err').textContent='');
+$('#lf').addEventListener('input',()=>$('#l-err').textContent='');
+/* フォームの送信はボタンとEnterキーで処理する（日本語入力の変換確定のEnterは無視） */
+$$('form').forEach(f=>f.addEventListener('submit',e=>e.preventDefault()));
+[['#lf',doLogin],['#sf',doSignup]].forEach(([s,fn])=>$(s).addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.isComposing&&e.keyCode!==229&&e.target.matches('input:not([type=checkbox])')){e.preventDefault();fn()}}));
+
+/* ---- 起動 ---- */
+DB=load();items=DB.items;ME=getSession();
+$('#n-cat').innerHTML=Object.keys(CATS).map(c=>`<option>${c}</option>`).join('');
+{const Y=new Date().getFullYear(),o=(n,f,u)=>`<option value="">${u}</option>`+Array.from({length:n},(_,i)=>`<option value="${f(i)}">${f(i)}${u}</option>`).join('');
+ $('#s-y').innerHTML=o(100,i=>Y-i,'年');$('#s-m').innerHTML=o(12,i=>i+1,'月');$('#s-d').innerHTML=o(31,i=>i+1,'日')}
+$('#stickers').innerHTML=px('ast','var(--red)',124,'a')+px('bolt','var(--yel)',82,'b')+px('aim','var(--org)',104,'c')+px('arw','var(--yel)',92,'d');
+$$('.st-note').forEach(e=>e.textContent=(LS?'入力した内容は、このブラウザの中にだけ保存されます。サーバーには送信されません。':'この表示環境ではブラウザへの保存が使えないため、ページを再読み込みすると登録内容は消えます。サーバーには送信されません。')+'モックなので、実在しないメールアドレス（例: test@example.com）でも試せます。普段お使いのパスワードは入力しないでください。');
+rAcc();
+const onNav=()=>{const p=hashNow();if(p!==ROUTE){ROUTE=p;route()}};
+window.addEventListener('popstate',onNav);window.addEventListener('hashchange',onNav);
+ROUTE=hashNow();route();
+</script>
+</body>
+</html>
